@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Daily Needs</string>
+    <string name="toolbar_appInfo">App Info</string>
+    <string name="item_name">Item Name:</string>
+    <string name="qty">Oty:</string>
+    <string name="description">"Note: "</string>
+    <string name="add_item">Add Item</string>
+    <string name="enter_item">Add New Item</string>
+    <string name="hint_qty">Enter Quantity</string>
+    <string name="hint_note">Add Note(Optional)</string>
+    <string name="save_button">Save</string>
+    <string name="hint_name">Enter Item Name</string>
+    <string name="date">Date Modified: 15 July,2020</string>
+    <string name="sure_text">Confirm Deletion?</string>
+    <string name="no_text">No</string>
+    <string name="yes_text">Yes</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="update_text">Update</string>
+</resources>

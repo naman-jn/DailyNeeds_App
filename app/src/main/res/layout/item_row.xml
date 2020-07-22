@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/allan_bold">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="#D5EAFB"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/jockey_one"
+                android:paddingLeft="7dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/item_name"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:fontFamily="@font/jockey_one"
+                android:padding="5dp"
+                android:text="@string/qty"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quantity"
+                android:fontFamily="@font/crimson_text_semibold"
+                android:padding="5dp"
+                android:text="@string/description"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/description"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="9dp"
+                android:fontFamily="@font/crimson_text_semibold"
+                android:paddingBottom="5dp"
+                android:text="@string/date"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/edit"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_above="@id/date"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="37dp"
+                android:background="@android:drawable/ic_menu_edit" />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_above="@id/date"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="7dp"
+                android:background="@android:drawable/ic_menu_delete" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
