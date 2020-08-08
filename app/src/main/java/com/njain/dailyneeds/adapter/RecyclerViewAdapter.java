@@ -2,7 +2,6 @@ package com.njain.dailyneeds.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.njain.dailyneeds.ListActivity;
-import com.njain.dailyneeds.MainActivity;
 import com.njain.dailyneeds.R;
 import com.njain.dailyneeds.data.DatabaseHandler;
 import com.njain.dailyneeds.model.Item;
@@ -51,8 +49,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         Item item=itemList.get(position);
         holder.itemName.setText(item.getName());
-        holder.qty.setText(String.valueOf(item.getQty()));
-        holder.description.setText(item.getDescription());
+        holder.qty.setText("Qty: "+String.valueOf(item.getQty()));
+        if(item.getDescription().length()!=0){
+            holder.description.setText("Note: "+item.getDescription());
+            holder.description.setPaddingRelative(5,5,5,5);
+        }else{
+            holder.description.setText(null);
+            holder.description.setPaddingRelative(0,0,0,0);
+        }
+
         holder.date.setText(item.getDateItemAdded());
         databaseHandler = new DatabaseHandler(context);
 
@@ -70,9 +75,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView qty;
         public TextView description;
         public TextView date;
-        public Button edit;
         public Button delete;
-
+        public CardView card;
         public ViewHolder(@NonNull View itemView,Context ctx) {
             super(itemView);
             context=ctx;
@@ -82,11 +86,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             description=itemView.findViewById((R.id.description));
             date=itemView.findViewById(R.id.date);
 
-            edit = itemView.findViewById(R.id.edit);
             delete = itemView.findViewById(R.id.delete);
+            card=itemView.findViewById(R.id.card);
 
-            edit.setOnClickListener(this);
             delete.setOnClickListener(this);
+            card.setOnClickListener(this);
+
 
         }
 
@@ -97,20 +102,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             Item item = itemList.get(position);
 
             switch (v.getId()) {
-                case R.id.edit:
-                    //edit item
-                    editItem(item);
-                    break;
                 case R.id.delete:
                     //delete item
                     deleteItem(item.getId());
                     break;
+                case R.id.card:
+                    editItem(item);
+                    break;
             }
         }
-
-
-
-
 
     private void deleteItem(final int id) {
 
@@ -125,7 +125,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         builder.setView(view);
         dialog = builder.create();
         dialog.show();
-
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +143,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 dialog.dismiss();
             }
         });
-
     }
 
 
@@ -152,7 +150,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         builder = new AlertDialog.Builder(context);
         inflater = LayoutInflater.from(context);
-        final View view = inflater.inflate(R.layout.popup, null);
+        final View view = inflater.inflate(R.layout.popup_item, null);
 
         Button saveButton;
         final EditText itemName;
@@ -183,7 +181,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
                 //update our item
                 DatabaseHandler databaseHandler = new DatabaseHandler(context);
-
                 //update items
                 newItem.setName(itemName.getText().toString());
                 newItem.setQty(Integer.parseInt(itemQty.getText().toString()));

@@ -1,19 +1,26 @@
 package com.njain.dailyneeds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -38,6 +45,7 @@ public class ListActivity extends AppCompatActivity {
     private EditText itemName;
     private EditText itemQty;
     private EditText itemDescription;
+    private Dialog infoDialog;
 
 
     @Override
@@ -56,12 +64,6 @@ public class ListActivity extends AppCompatActivity {
         //Get items from db
         itemList = databaseHandler.getAllItems();
 
-//        for (Item item : itemList) {
-//
-//            Log.d(TAG, "onCreate: " + item);
-//
-//        }
-
         recyclerViewAdapter = new RecyclerViewAdapter(this, itemList);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
@@ -76,17 +78,30 @@ public class ListActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.app_info){
+            MainActivity.appInfo(this);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void createPopupDialog() {
 
         builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.popup, null);
+        View view = getLayoutInflater().inflate(R.layout.popup_item, null);
 
         itemName = view.findViewById(R.id.itemName);
         itemQty = view.findViewById(R.id.itemQty);
         itemDescription = view.findViewById(R.id.itemDescription);
 
         saveButton = view.findViewById(R.id.saveButton);
-
 
         builder.setView(view);
         alertDialog=builder.create();
@@ -133,7 +148,12 @@ public class ListActivity extends AppCompatActivity {
                 finish();
 
             }
-        }, 900);
+        }, 700);
     }
+
+    private void shareAllItem(){
+
+    }
+
 
 }

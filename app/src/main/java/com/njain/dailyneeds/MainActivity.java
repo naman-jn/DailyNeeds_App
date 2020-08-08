@@ -1,18 +1,21 @@
 package com.njain.dailyneeds;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.njain.dailyneeds.adapter.RecyclerViewAdapter;
 import com.njain.dailyneeds.data.DatabaseHandler;
 import com.njain.dailyneeds.model.Item;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.util.Log;
@@ -22,11 +25,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static Dialog infoDialog;
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private Button saveButton;
@@ -34,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText itemQty;
     private EditText itemDescription;
     private DatabaseHandler databaseHandler;
-
 
 
     @Override
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createPopupDialog() {
         builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.popup, null);
+        View view = getLayoutInflater().inflate(R.layout.popup_item, null);
 
         itemName = view.findViewById(R.id.itemName);
         itemQty = view.findViewById(R.id.itemQty);
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
         saveButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
@@ -125,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
 
             }
-        }, 900);
+        }, 700);
     }
 
     @Override
@@ -144,9 +149,17 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.app_info) {
+            appInfo(this);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void appInfo(Context context) {
+        infoDialog=new Dialog(context);
+        infoDialog.setContentView(R.layout.popup_info);
+        infoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        infoDialog.show();
     }
 }
